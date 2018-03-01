@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+@*<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+
+<address>
+    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>*@
+
+<section id="page-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-text">
+                <h1 class="section-heading">@ViewBag.Title</h1>
+                <h3>Send your valuable feedback</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if(ViewBag.Message != null)
+{
+    <h2 class="alert alert-info">@ViewBag.Message</h2>
+}
+
+<section id="page-content">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-6">
+                @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+    {
+            @Html.AntiForgeryToken()
+
+            <h4>Message Form</h4>
+            <hr />
+            <div class="form-group">
+                <label for="txtFullName">Full Name</label>
+                <input type="text" class="form-control" name="txtFullName" placeholder="John Doe" />
+            </div>
+
+            <div class="form-group">
+                <label for="txtEmail">Email</label>
+                <input type="email" class="form-control" name="txtEmail" placeholder="johndoe@website.com" />
+            </div>
+
+            <div class="form-group">
+                <label for="txtSubject">Subject</label>
+                <input type="text" class="form-control" name="txtSubject" placeholder="Subject" />
+            </div>
+
+            <div class="form-group">
+                <label for="txtMessage">Message</label>
+                <textarea name="txtMessage" class="form-control" placeholder="Message" rows="10"></textarea>
+            </div>
+
+            <input type="submit" value="Send Message" class="btn btn-primary" />
+}
+            </div>
+
+            <div class="col-md-6">
+                <h4>Other Contact Details</h4>
+                <hr />
+                @*<p class="lead"><i class="fa fa-location-arrow"></i> One Microsoft Way, Redmond, WA 98052-6399</p>
+                <p class="lead"><i class="fa fa-phone"></i> 425.555.0100</p>
+                <p class="lead"><i class="fa fa-fax"></i> 425.555.0100</p>*@
+                <p class="lead"><i class="fa fa-support"></i> <a href="mailto:Support@boonway.org">Support@boonway.org</a></p>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="address-map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d188820.04330828926!2d-71.11036833603406!3d42.31451859110318!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e3652d0d3d311b%3A0x787cbf240162e8a0!2sBoston%2C+MA!5e0!3m2!1sen!2s!4v1516053695742" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>         
+</section>

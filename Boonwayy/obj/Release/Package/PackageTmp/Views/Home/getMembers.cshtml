@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Boonwayy.Models.UserProfile>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <img src="~/Content/Files/UserProfileImages/@item.ProfilePictureUrl" alt="John" width="30" height="30">
+                <p>@Html.DisplayFor(modelItem => item.FullName)</p>
+            </div>
+        }
+    </div>
+</div>
+

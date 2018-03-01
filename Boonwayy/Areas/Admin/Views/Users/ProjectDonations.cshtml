@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Boonwayy.Models.Donation>
+
+@{
+    ViewBag.Title = "Donations";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var totalAmount = 0;
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Donations for @ViewBag.ProjectTitle</h4>
+
+                    </div>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped">
+                            <thead>
+
+                            <th>@Html.DisplayNameFor(model => model.DonatorName)</th>
+                            <th>@Html.DisplayNameFor(model => model.Email)</th>
+                            <th>@Html.DisplayNameFor(model => model.City)</th>
+                            <th>@Html.DisplayNameFor(model => model.State)</th>
+                            <th>@Html.DisplayNameFor(model => model.AmountInCents)</th>
+                            <th>Date</th>
+
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.DonatorName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.City)</td>
+
+                                        <td>@Html.DisplayFor(modelItem => item.State)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.AmountInCents)</td>
+
+                                        <td>@item.DonationDate.ToLongDateString()</td>
+
+
+                                    </tr>
+                                    //total ammount
+                                    totalAmount += item.AmountInCents;
+                                }
+
+                                <tr>
+                                    <td colspan="6" align="right" style="font-size:24px;">
+                                        <strong>Total Donation Amount: $@totalAmount</strong>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Boonwayy.Models.Project>
+
+@{
+    ViewBag.Title = "Explore";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section id="explore-page-header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-text">
+                <h1 class="section-heading">@ViewBag.Title</h1>
+                <h3>Explore and find your path</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="explore-project">
+    <div class="container">
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 text-center">
+                    <img style="width:360px;height:255px;" src="~/Content/Files/ProjectCoverImages/@Html.DisplayFor(modelItem => item.ProjectCoverImgUrl)" class="img-thumbnail img-responsive explore-proj-img" />
+                    <hr />
+                    <h3>@Html.DisplayFor(modelItem => item.ProjectTitle)</h3>
+                    <h4>Budget Goal: @Html.DisplayFor(modelItem => item.BudgetGoal)</h4>
+                    <h4>Contribution: @Html.DisplayFor(modelItem => item.AmountContributed)</h4>
+                    <a href="@Url.Action("Project", "Home", new { @id = @Html.DisplayFor(modelItem => item.Id) })" class="btn btn-block btn-primary"><i class="fa fa-folder-open"></i> View Project</a>
+
+                    <hr />
+                </div>
+            }
+        </div>
+    </div>
+</section>

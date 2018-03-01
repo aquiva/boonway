@@ -1,0 +1,26 @@
+﻿@model Boonwayy.Models.UserProfile
+
+@{
+    ViewBag.Title = "Your Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("UserDashboardMenu")
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <!--300x200 img for profile-->
+                <img src="~/Content/Files/UserProfileImages/@Html.DisplayFor(model => model.ProfilePictureUrl)" alt="John" style="width:100%">
+                <div class="card-info">
+                    <h1>@Html.DisplayFor(model => model.FullName)</h1>
+                    <p class="title"><i class="fa fa-briefcase"></i> @Html.DisplayFor(model => model.Profession)</p>
+                    <p class="title"><i class="fa fa-map-marker"></i> @Html.DisplayFor(model => model.State), @Html.DisplayFor(model => model.Address)</p>
+                    <p>@Html.DisplayFor(model => model.Bio)</p>
+                    <a href="@Url.Action("EditProfile", "Manage")" class="btn btn-success"><i class="fa fa-pencil"></i> Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

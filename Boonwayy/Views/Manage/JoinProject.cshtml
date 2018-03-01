@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "JoinProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Join Project</h2>
+    @if (ViewBag.Message != null)
+    {
+        <h3 class="alert alert-info">@ViewBag.Message</h3>
+    }
+    else
+    {
+        Response.Redirect("~/Manage/Index");
+    }
+
+</div>

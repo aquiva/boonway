@@ -1,0 +1,18 @@
+﻿@{
+                /**/
+
+                ViewBag.Title = "Confirm";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["MailConfirm"] != null)
+{
+    <div class="container">
+        <h2>Confirm</h2>
+        <p class="lead">@TempData["MailConfirm"]</p>
+    </div>
+}
+else
+{
+    Response.Redirect("~/Account/Login");
+}

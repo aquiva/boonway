@@ -1,0 +1,206 @@
+﻿@model Boonwayy.Models.Project
+
+@{
+    ViewBag.Title = "Post a Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.Partial("UserDashboardMenu")
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Idea / Project Submission Form</h2>
+
+            @if (ViewBag.Message != null)
+            {
+                <h2 class="alert alert-info">@ViewBag.Message</h2>
+            }
+
+
+            @using (Html.BeginForm("PostProject", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Post a project, project category is automatically submitted based on your subscription. If you are not subscribed to any of our subscription plans your project will be posted in CelebWorld.</h4>
+                    <hr />
+
+                    <div class="form-group">
+                        <div class="checkbox col-md-offset-2 col-md-10">
+                            <label><input type="checkbox" name="postInCW">Do you want to post in CelebWorld? (If checked your project will be posted in CelebWorld excluding your subscription category.)</label>
+                            
+                        </div>
+
+                    </div>
+
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProjectTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProjectTitle, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProjectTitle, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                        </div>
+
+                        @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                        </div>
+
+                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="col-md-2">
+                            @Html.HiddenFor(model => model.Country)
+                            <input type="text" value="United States" readonly class="form-control" />
+                        </div>
+
+
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="CoverImageFile" class="control-label col-md-2">Project Cover Image</label>
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon">JPG, PNG, BMP</span>
+                                <input type="file" id="CoverImageFile" name="CoverImageFile" class="form-control" onchange="fileUploadValidation('CoverImageFile');" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BudgetGoal, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.BudgetGoal, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BudgetGoal, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProjectNiche, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProjectNiche, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProjectNiche, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProjectDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @rows = "6" })
+                            @Html.ValidationMessageFor(model => model.ProjectDescription, "", new { @class = "text-danger" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.YoutubeVideoUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.YoutubeVideoUrl, new { htmlAttributes = new { @class = "form-control", @id = "videoBox", @onchange = "makeEmbed()" } })
+                            @Html.ValidationMessageFor(model => model.YoutubeVideoUrl, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProjectNeeds, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.ProjectNeeds, new { @class = "form-control", @rows = "6" })
+                            @Html.ValidationMessageFor(model => model.ProjectNeeds, "", new { @class = "text-danger" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProjectEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProjectEndDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                            @Html.ValidationMessageFor(model => model.ProjectEndDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+            @Html.LabelFor(model => model.ApplicationUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ApplicationUserId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ApplicationUserId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+                    <div class="form-group">
+                        <div class="checkbox col-md-offset-2 col-md-10">
+                            <label><input type="checkbox" checked disabled>I agree to the terms &amp; conditions.</label>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Submit Project" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+            <div>
+                @Html.ActionLink("Go Back", "Index")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script type="text/javascript">
+    function fileUploadValidation(elementId) {
+        var myElementById = document.getElementById(elementId);
+        var size = parseFloat(myElementById.files[0].size / 1024).toFixed(2);
+        if (typeof (myElementById.files) != "undefined") {
+
+            if (size > 10000) {
+                alert("Upload Limit Exceeded, 10MB is maximum file size.");
+
+                var elementInput = $("#" + elementId);
+                elementInput.replaceWith(elementInput.val('').clone(true));
+            }
+            else {
+                return true;
+            }
+
+        } else {
+            alert("This browser does not support HTML5.");
+        }
+    }
+
+    function makeEmbed() {
+        var str = document.getElementById("videoBox").value;
+
+        var res = str.replace(".com/watch?v=", ".com/embed/");
+
+
+        document.getElementById("videoBox").value = res;
+
+        //alert(res);
+    }
+
+</script>

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Boonwayy.Models.Project>
+
+@{
+    ViewBag.Title = "User Projects";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Projects by @ViewBag.UserFullName</h4>
+
+                    </div>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped">
+                            <thead>
+
+                            <th>@Html.DisplayNameFor(model => model.ProjectTitle)</th>
+                            <th>@Html.DisplayNameFor(model => model.BudgetGoal)</th>
+                            <th>@Html.DisplayNameFor(model => model.AmountContributed)</th>
+                            <th>@Html.DisplayNameFor(model => model.ProjectStartDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.ProjectEndDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.ProjectCategory)</th>
+                            <th>Approve</th>
+                            <th>Delete</th>
+                            <th>Donations</th>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.ProjectTitle)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.BudgetGoal)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.AmountContributed)</td>
+                                        <td>@item.ProjectStartDate.ToLongDateString()</td>
+                                        <td>@item.ProjectEndDate.ToLongDateString()</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ProjectCategory)</td>
+
+
+                                        <td><a href="@Url.Action("Project", "Home", new { area = "", id = item.Id })" class="btn btn-success" target="_blank">View Full</a></td>
+                                        <td><a href="@Url.Action("DeleteProject", "Users", new { id = item.Id })" class="btn btn-danger">Delete Project</a></td>
+                                        <td><a href="@Url.Action("ProjectDonations", "Users", new { id = item.Id })" class="btn btn-primary">Donations</a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

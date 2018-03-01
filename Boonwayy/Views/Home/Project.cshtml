@@ -1,0 +1,287 @@
+﻿@model Boonwayy.Models.Project
+
+@{
+    ViewBag.Title = "Boonway - " + Model.ProjectTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var startDate = Model.ProjectStartDate;
+    var endDate = Model.ProjectEndDate;
+    //startDate.ToShortDateString();
+
+    var projectSubscription = "CelebWorld";
+
+    //var amountContributedPerc = Math.Floor((Model.AmountContributed * 100) / Model.BudgetGoal);
+
+    var myUrl = Request.Url.ToString();
+
+    var projectUserId = Model.ApplicationUserId;
+
+    var projectUrl = Request.Url.AbsoluteUri;
+
+}
+
+@*@if(projectUserId == ViewBag.CurrentUserId)
+    {
+        <h2>You can not join your own project</h2>
+    }
+    else
+    {
+        <h2>You can join project</h2>
+    }*@
+
+@if (Model.ProjectCategory == "platinum_plan")
+{
+    projectSubscription = "Platinum Plan";
+}
+else if (Model.ProjectCategory == "gold_plan")
+{
+    projectSubscription = "Gold Plan";
+}
+else if (Model.ProjectCategory == "silver_plan")
+{
+    projectSubscription = "Silver Plan";
+}
+
+<div class="container">
+
+    @if(TempData["JoinMessage"] != null)
+    {
+        <h2 class="alert alert-info"><i class="fa fa-info-circle"></i> @TempData["JoinMessage"]</h2>
+    }
+    
+
+        <div class="row">
+            <div class="col-md-4">
+                <br />
+                <div class="card">
+                    <!--300x200 img for profile-->
+                    <img src="~/Content/Files/UserProfileImages/@ViewBag.UserImage" alt="John" style="width:100%">
+                    <div class="card-info">
+                        <h1>@ViewBag.UserName</h1>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h2>@Html.DisplayFor(model => model.ProjectTitle)</h2>
+                <hr />
+                <img src="~/Content/Files/ProjectCoverImages/@Html.DisplayFor(model => model.ProjectCoverImgUrl)" class="img-responsive img-rounded text-center center-block" style="height:315px;width:100%;" />
+                <hr />
+
+                <hr />
+                <p class="lead">Description: @Html.DisplayFor(model => model.ProjectDescription)</p>
+                <hr />
+                <p class="lead">Needs: @Html.DisplayFor(model => model.ProjectNeeds)</p>
+                <hr />
+            </div>
+            <div class="col-md-4">
+                <h2>Project Details</h2>
+                <h4 class="text-primary"><strong>Started On: @startDate.ToLongDateString()</strong> </h4>
+                <h4>Budget Goal: @Html.DisplayFor(model => model.BudgetGoal)</h4>
+                <h4>Type: @Html.DisplayFor(model => model.ProjectNiche)</h4>
+                <h4>Contribution: @Html.DisplayFor(model => model.AmountContributed)</h4>
+                <h4 class="text-warning"><strong>Ends On: @endDate.ToLongDateString()</strong></h4>
+                <h4>Project Subscription: @projectSubscription</h4>
+                <h4>Project Progress:</h4>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+                         aria-valuenow="@ViewBag.amountContributedPerc" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.amountContributedPerc%">
+                        @ViewBag.amountContributedPerc%
+                    </div>
+                </div>
+
+
+
+                @if (Model.ProjectStatus == false)
+        {
+            <a href="@Url.Action("Donate", "Home", new { Model.Id })" class="btn btn-primary">Donate</a>
+}
+else
+{
+        <h2 class="label label-info"><i class="fa fa-trophy"></i> Project Ended</h2>
+}
+
+            </div>
+            <div class="col-md-6">
+                @if (Model.YoutubeVideoUrl != null)
+        {
+            <h4><span class="glyphicon glyphicon-play-circle"></span> Project Video</h4>
+            <iframe id="theIframe" onload="" width="555" height="315" src="@Html.DisplayFor(model => model.YoutubeVideoUrl)" class="img-rounded" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+}
+
+                @using (Html.BeginForm("JoinProject", "Manage", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="project_category" value="@Html.DisplayFor(model => model.ProjectCategory)" />
+            <input type="hidden" name="project_id" value="@Html.DisplayFor(model => model.Id)" />
+            <button type="submit" class="btn btn-block btn-lg btn-gold"><i class="fa fa-handshake-o"></i> Join Project Now</button>
+}
+
+
+
+            </div>
+
+            <div class="col-md-2">
+                @if (ViewBag.totalVotes != null)
+        {
+            <p class="lead label label-success"><i class="fa fa-thumbs-o-up"></i> Total Votes:  @ViewBag.totalVotes</p>
+
+}
+
+                <br />
+                <br />
+
+                @if (ViewBag.UserHasVote == 0)
+        {
+            <a href="@Url.Action("Vote", "Home", new { projectId = Model.Id })" class="btn btn-success"><i class="fa fa-user-plus"></i> Vote Project</a>
+
+}
+else
+{
+
+        <a href="@Url.Action("Vote", "Home", new { projectId = Model.Id })" class="btn btn-warning"><i class="fa fa-minus-circle"></i> Unvote Project</a>
+
+}
+
+                <!-- Like System -->
+                <hr />
+
+                @if (ViewBag.LikeCount != null)
+        {
+            <p class="lead label label-success"><i class="fa fa-heart"></i> Total Likes:  @ViewBag.LikeCount</p>
+}
+
+                <br />
+                <br />
+
+                @if (ViewBag.UserHasLike == 0)
+        {
+            <a href="@Url.Action("Like", "Home", new { projectId = Model.Id })" class="btn btn-success"><i class="fa fa-heart"></i> Like Project</a>
+
+}
+else
+{
+
+        <a href="@Url.Action("Like", "Home", new { projectId = Model.Id })" class="btn btn-warning"><i class="fa fa-heart-o"></i> Unlike Project</a>
+
+}
+
+                <br />
+                <br />
+
+
+                @if (TempData["InviteMessage"] != null)
+        {
+            <p class="lead text text-info">@TempData["InviteMessage"]</p>
+}
+else
+{
+        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Invite Investor or Entrepreneur</a>
+
+}
+
+            </div>
+
+
+            <div class="col-md-12">
+                <h3>Project Members</h3>
+                @Html.Action("getMembers", "Home", new { id = Model.Id })
+            </div>
+
+            <hr />
+
+            <div class="col-md-12">
+                @if (Request.IsAuthenticated)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                       
+                      @Html.Action("getComments", "Home", new { id = Model.Id })
+                           
+                </div>
+
+
+                @using (Html.BeginForm("AddComment", "Home", FormMethod.Post))
+        {
+            <div class="panel-body">
+
+
+                <div class="">
+                    <textarea name="txtComment" cols="40" rows="10" id="status_message" class="form-control message" required style="height: 62px; overflow: hidden;" placeholder="What's on your mind ?"></textarea>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+
+                    <div class="col-md-5 col-md-offset-7">
+                        <div class="form-group">
+                            <input type="hidden" name="projectId" value="@Model.Id" />
+                            <input type="submit" name="submit" value="Post Comment" class="btn btn-primary pull-right">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+}
+            </div>
+}
+            </div>
+
+
+            
+
+        </div>
+
+
+    <!-- Trigger the modal with a button -->
+    @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Invite an Investor or Entrepreneur</h4>
+                </div>
+                <div class="modal-body">
+
+                    @using (Html.BeginForm("Invite", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label class="control-label" for="txtName">Name</label>
+                            <input type="text" name="txtName" required class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="txtEmail">Recipient Email</label>
+                            <input type="email" name="txtEmail" required class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="txtComments">Comments</label>
+                            <textarea class="form-control" name="txtComments" rows="6"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" name="txtProjectTitle" value="@Model.ProjectTitle" />
+                            <input type="hidden" name="txtProjectUrl" value="@projectUrl" />
+                            <input type="hidden" name="projectId" value="@Model.Id" />
+
+                            <input type="submit" value="Invite" class="btn btn-primary" />
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

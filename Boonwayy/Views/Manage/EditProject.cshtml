@@ -1,0 +1,248 @@
+﻿@model Boonwayy.Models.Project
+
+@{
+    ViewBag.Title = "Edit Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("UserDashboardMenu")
+
+<div class="container">
+
+    <h2>Edit Project</h2>
+    <a href="#" class="btn pull-right btn-warning" data-toggle="modal" data-target="#myModal">Delete Project</a>
+
+    @using (Html.BeginForm("EditProject", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h3>@Html.DisplayFor(model => model.ProjectTitle)</h3>
+
+        @if (TempData["ProjEdit"] != null)
+    {
+        <h4 class="text text-primary">@TempData["ProjEdit"]. <a href="@Url.Action("Project", "Home", new { id = Model.Id })" class="btn btn-primary">View Project</a></h4>
+}
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.ApplicationUserId)
+        @Html.HiddenFor(model => model.ProjectCoverImgUrl)
+        @Html.HiddenFor(model => model.ProjectCategory)
+        @*@Html.HiddenFor(model => model.ProjectStartDate)
+        @Html.HiddenFor(model => model.ProjectEndDate)
+        @Html.HiddenFor(model => model.BudgetGoal)*@
+        @Html.HiddenFor(model => model.AmountContributed)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProjectTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectNeeds, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.ProjectNeeds, new { @class = "form-control", @rows = "6" })
+                @Html.ValidationMessageFor(model => model.ProjectNeeds, "", new { @class = "text-danger" })
+
+
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.ProjectCoverImgUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectCoverImgUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProjectCoverImgUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <label for="CoverImageFile" class="control-label col-md-2">Project Cover Image</label>
+            <div class="col-md-10">
+                <div class="input-group">
+                    <span class="input-group-addon">JPG, PNG, BMP</span>
+                    <input type="file" id="CoverImageFile" name="CoverImageFile" class="form-control" onchange="fileUploadValidation('CoverImageFile');" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BudgetGoal, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BudgetGoal, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BudgetGoal, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.AmountContributed, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AmountContributed, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AmountContributed, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectNiche, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectNiche, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProjectNiche, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.ProjectCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectCategory, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProjectCategory, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.ProjectDescription, new { @class = "form-control", @rows = "6" })
+                @Html.ValidationMessageFor(model => model.ProjectDescription, "", new { @class = "text-danger" })
+
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.YoutubeVideoUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.YoutubeVideoUrl, new { htmlAttributes = new { @class = "form-control", @id = "videoBox", @onchange = "makeEmbed()" } })
+                @Html.ValidationMessageFor(model => model.YoutubeVideoUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectStartDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.ProjectStartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectEndDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.ProjectEndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group well">
+            @*@Html.LabelFor(model => model.ProjectStatus, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2">End Project Now</label>
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.ProjectStatus)
+                    @Html.ValidationMessageFor(model => model.ProjectStatus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save Changes" class="btn btn-lg btn-default" />
+            </div>
+        </div>
+    </div>
+        }
+
+        
+
+        <!-- Trigger the modal with a button -->
+        @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Delete Project</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Are you sure you want to delete the project?</h3>
+                    </div>
+                    <div class="modal-footer">
+                        @using (Html.BeginForm("DeleteProject", "Manage", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.ApplicationUserId)
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+                }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script type="text/javascript">
+    function fileUploadValidation(elementId) {
+        var myElementById = document.getElementById(elementId);
+        var size = parseFloat(myElementById.files[0].size / 1024).toFixed(2);
+        if (typeof (myElementById.files) != "undefined") {
+
+            if (size > 10000) {
+                alert("Upload Limit Exceeded, 10MB is maximum file size.");
+
+                var elementInput = $("#" + elementId);
+                elementInput.replaceWith(elementInput.val('').clone(true));
+            }
+            else {
+                return true;
+            }
+
+        } else {
+            alert("This browser does not support HTML5.");
+        }
+    }
+
+    function makeEmbed() {
+        var str = document.getElementById("videoBox").value;
+
+        var res = str.replace(".com/watch?v=", ".com/embed/");
+
+
+        document.getElementById("videoBox").value = res;
+
+        //alert(res);
+    }
+
+</script>

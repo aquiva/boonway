@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Reset Password</title>
+</head>
+<body>
+
+    <div style="width:100%;height:auto;background:#f9f9f9;padding:20px;">
+        <center><img src="https://www.boonway.org/Content/images/logo-boonwayy-color.png" width="200" height="auto" /></center>
+        <h3>Hi @ViewBag.RecEmail</h3>
+        <h3>You have been invited to the following project by @ViewBag.InviterName: <a href="@ViewBag.ProjectLink">@ViewBag.ProjectTitle</a></h3>
+        <h3>Can't click it? Copy and paste it in your browser:</h3>
+        <p>@ViewBag.ProjectLink</p>
+        <hr />
+        <h4>Comments: @ViewBag.Comments</h4>
+    </div>
+
+
+
+    <div style="width:100%;height:auto;background:#f9f9f9;padding:20px;text-align:center;">
+        <p>&copy; Boonway.</p>
+    </div>
+
+
+
+</body>
+</html>

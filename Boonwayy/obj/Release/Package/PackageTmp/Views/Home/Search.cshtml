@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Boonwayy.Models.Project>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="jumbotron text-center">
+        <h4><i class="fa fa-search"></i> Search Projects</h4>
+        @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+        {
+            <input type="text" class="form-control" placeholder="Project Title" name="txtSearchTitle" required />
+        }
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="lead">You searched for: @ViewBag.SearchResultFor</p>
+        </div>
+    </div>
+
+    <div class="row">
+
+        
+
+        @foreach (var item in Model)
+    {
+
+        <div class="col-md-4" style="margin:20px 0 20px;">
+            <div class="card">
+                <!--300x200 img for profile-->
+                <img src="~/Content/Files/ProjectCoverImages/@Html.DisplayFor(modelItem => item.ProjectCoverImgUrl)" class="" alt="John" height="200" width="100%">
+                <div class="card-info">
+                    <p>@item.ProjectTitle</p>
+                    <p>@Html.Action("Profiles", "Home", new { id = item.ApplicationUserId })</p>
+                    <p>Raised: $@item.AmountContributed</p>
+                    <a href="@Url.Action("Project", "Home", new { @id = @Html.DisplayFor(modelItem => item.Id) })" class="btn btn-block btn-primary"><i class="fa fa-folder-open"></i> View Project</a>
+                </div>
+
+            </div>
+        </div>
+
+}
+    </div>
+
+</div>

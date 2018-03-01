@@ -1,0 +1,21 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="" href="@Url.Action("UserProfile", "Manage")"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+                <li><a href="@Url.Action("Index", "Manage")">Overview</a></li>
+                <li><a href="@Url.Action("MyProjects", "Manage")">My Projects</a></li>
+                <li><a href="@Url.Action("PostProject", "Manage")">Post a Project</a></li>
+
+                <li><a href="@Url.Action("ChangePassword", "Manage")">Change Password</a></li>
+                <li><a href="@Url.Action("MySubscription", "Manage")">Subscription</a></li>
+                <li><a href="@Url.Action("CreateUserProposal", "Manage")">Submit a Proposal</a></li>
+                <li><a href="@Url.Action("ERF", "Manage")">Stories</a></li>
+            </ul>
+        </div>
+    </nav>
+}

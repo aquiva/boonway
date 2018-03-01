@@ -1,0 +1,23 @@
+﻿@model Boonwayy.Models.IndexViewModel
+@{
+    ViewBag.Title = "User Dashboard";
+}
+
+@*<h2>@ViewBag.Title</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>*@
+
+
+<div class="">
+
+    @Html.Partial("UserDashboardMenu")
+</div>
+
+
+<div class="container">
+    <h2>Essentials</h2>
+    <hr />
+    <p class="lead"><i class="fa fa-info-circle"></i> You can directly submit a project in CelebWorld.</p>
+    <p class="lead"><i class="fa fa-info-circle"></i> In order to join or submit a project in the specific categories Silver, Gold and Platinum, you need to submit a proposal to us. To submit your proposal <a href="@Url.Action("CreateUserProposal", "Manage")">click here.</a></p>
+    <p class="lead"><i class="fa fa-info-circle"></i> If you have submitted a proposal then it will be reviewed and approved by our team.</p>
+</div>

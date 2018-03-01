@@ -1,0 +1,41 @@
+﻿@model Boonwayy.Models.UserProfile
+
+@{
+    ViewBag.Title = "User Profile";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-4 text-center">
+
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">@Html.DisplayFor(model => model.FullName)</h4>
+                        <p class="category">@Html.DisplayFor(model => model.Profession)</p>
+                    </div>
+                    <div class="content">
+                        <h3><img src="~/Content/Files/UserProfileImages/@Html.DisplayFor(model => model.ProfilePictureUrl)" class="img-responsive center-block" /></h3>
+                        <hr />
+                        <div class="footer">
+                            <p>@Html.DisplayFor(model => model.Bio)</p>
+                            <p>@Html.DisplayFor(model => model.State)</p>
+                            <p>@Html.DisplayFor(model => model.Address)</p>
+                            <p>@Html.DisplayFor(model => model.SocialSecurityNumber)</p>
+                            <p>@Html.DisplayFor(model => model.Gender)</p>
+                            <hr />
+
+                            <a href="@Url.Action("UserProjects", "Users", new { id = Model.ApplicationUserId })" class="btn btn-info">View Projects</a>
+
+                            <a href="@Url.Action("UserERFs", "Users", new { id = Model.ApplicationUserId })" class="btn btn-info">View ERF Posts</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

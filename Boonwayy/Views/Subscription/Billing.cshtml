@@ -1,0 +1,39 @@
+﻿@model Boonwayy.Models.Subscription.BillingViewModel
+    @{
+        ViewBag.Title = "Billing";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+<div class="container">
+    <h2>Billing Information</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-dismissable alert-info">You Chose @Model.Plan.Name</div>
+            <h3>$@Model.Plan.AmountInDollars / @Model.Plan.Interval</h3>
+            
+
+            @using (Html.BeginForm("Billing", "Subscription", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="@Model.StripePublishableKey"
+                        data-amount="@Model.Plan.AmountInCents"
+                        data-name="@Model.Plan.Name"
+                        data-description="@Model.Plan.Description">
+                </script>
+
+                @Html.HiddenFor(m => m.StripePublishableKey)
+                @Html.HiddenFor(m => m.Plan.Id)
+            }
+        </div>
+    </div>
+</div>
+@*@model Boonwayy.Models.Subscription.BillingViewModel
+    @{
+        ViewBag.Title = "Billing";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>This is Billing View, Billing View Model is imported too.</h2>*@

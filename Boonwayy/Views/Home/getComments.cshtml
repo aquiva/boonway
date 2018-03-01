@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Boonwayy.Models.Comment>
+
+@{
+    var projectHolderId = Session["projectHolderId"].ToString();
+
+    var loggedUserId = Session["loggedInUserId"].ToString();
+}
+
+<table class="table table-responsive">
+    
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <label class="alert alert-info">
+                    <i class="fa fa-user"></i> - @Html.Action("getCommentProfile", "Home", new { id = item.ApplicationUserId })
+                    <br />
+                    @Html.DisplayFor(modelItem => item.UserComment)
+
+                </label>
+
+                <br />
+
+                @if (projectHolderId == loggedUserId)
+    {
+            <a href="@Url.Action("DeleteComment", "Home", new { id = item.Id })">Delete Comment</a>
+}
+
+
+            </td>
+            
+        </tr>
+    }
+
+</table>
+

@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Boonwayy.Models.Project>
+
+<div class="container">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-md-4" style="margin:20px 0 20px;">
+            <div class="card">
+                <!--300x200 img for profile-->
+                <img src="~/Content/Files/ProjectCoverImages/@Html.DisplayFor(modelItem => item.ProjectCoverImgUrl)" class="" alt="John" height="200" width="100%">
+                <div class="card-info">
+                    <p>@item.ProjectTitle</p>
+                    @Html.Action("Profiles", "Home", new { id = item.ApplicationUserId })
+                    <p>Goal: $@item.BudgetGoal</p>
+                    <p>Raised: $@item.AmountContributed</p>
+                    <a href="@Url.Action("Project", "Home", new { @id = @Html.DisplayFor(modelItem => item.Id) })" class="btn btn-block btn-primary"><i class="fa fa-folder-open"></i> View Project</a>
+                </div>
+
+            </div>
+        </div>
+
+    }
+</div>
+

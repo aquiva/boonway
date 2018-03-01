@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Boonwayy.Models.MemberContribution>
+
+@{
+    ViewBag.Title = "Member Contributions";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var totalAmount = 0;
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Donations for @ViewBag.ProjectTitle</h4>
+
+                    </div>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped">
+                            <thead>
+
+                            <th>@Html.DisplayNameFor(model => model.User.Email)</th>
+                            <th>@Html.DisplayNameFor(model => model.AmountInCents)</th>
+                            <th>Stripe Customer ID</th>
+                           
+                            <th>Contribution Date</th>
+
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.AmountInCents)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.User.StripeCustomerId)</td>
+
+                                        <td>@Html.DisplayFor(modelItem => item.ContributionDate)</td>
+                                        
+
+                                    </tr>
+                                    //total ammount
+                                    totalAmount += item.AmountInCents;
+                                }
+
+                                <tr>
+                                    <td colspan="6" align="right" style="font-size:24px;">
+                                        <strong>Total Donation Amount: $@totalAmount</strong>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

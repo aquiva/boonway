@@ -1,0 +1,111 @@
+﻿@model Boonwayy.Models.MERF
+
+@{
+    ViewBag.Title = "Create Emergency relief Funds Post";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("UserDashboardMenu")
+
+<div class="container">
+
+    <h2>Post story here</h2>
+
+    @using (Html.BeginForm("CreateERF", "Manage", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Story submission form</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Story, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Story, new { @class = "form-control", @rows = "6" })
+                    @Html.ValidationMessageFor(model => model.Story, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Youtube Video Link</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VideoUrl, new { htmlAttributes = new { @class = "form-control", @id = "videoBox", @onchange = "makeEmbed()" } })
+                    @Html.ValidationMessageFor(model => model.VideoUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MERFStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MERFStartDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    @Html.ValidationMessageFor(model => model.MERFStartDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.ApplicationUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ApplicationUserId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ApplicationUserId, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Post Story" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script type="text/javascript">
+    function fileUploadValidation(elementId) {
+        var myElementById = document.getElementById(elementId);
+        var size = parseFloat(myElementById.files[0].size / 1024).toFixed(2);
+        if (typeof (myElementById.files) != "undefined") {
+
+            if (size > 10000) {
+                alert("Upload Limit Exceeded, 10MB is maximum file size.");
+
+                var elementInput = $("#" + elementId);
+                elementInput.replaceWith(elementInput.val('').clone(true));
+            }
+            else {
+                return true;
+            }
+
+        } else {
+            alert("This browser does not support HTML5.");
+        }
+    }
+
+    function makeEmbed() {
+        var str = document.getElementById("videoBox").value;
+
+        var res = str.replace(".com/watch?v=", ".com/embed/");
+
+
+        document.getElementById("videoBox").value = res;
+
+        //alert(res);
+    }
+
+</script>

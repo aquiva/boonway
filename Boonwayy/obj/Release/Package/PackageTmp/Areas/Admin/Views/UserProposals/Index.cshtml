@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Boonwayy.Models.UserProposal>
+
+@{
+    ViewBag.Title = "User Applications";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">See Approved Applications</h4>
+                        <p class="category">Unapprove them if needed</p>
+                    </div>
+                    <div class="content">
+                        <h3>Total @ViewBag.ApprovedApplications</h3>
+                        <hr />
+                        <div class="footer">
+                            <a href="@Url.Action("Approved", "UserProposals")" class="btn btn-info">View All</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Unapproved Applications</h4>
+                        <p class="category">Approval applications sent by members, admin can approve</p>
+                    </div>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped">
+                            <thead>
+
+                            <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                            <th>@Html.DisplayNameFor(model => model.SocialSecurityNumber)</th>
+                            <th>@Html.DisplayNameFor(model => model.State)</th>
+                            <th>@Html.DisplayNameFor(model => model.Address)</th>
+                            <th>@Html.DisplayNameFor(model => model.DriverLicenseUrl)</th>
+                            <th>@Html.DisplayNameFor(model => model.OfferLetterUrl)</th>
+                            <th>Approve</th>
+                            <th>Delete</th>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.SocialSecurityNumber)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.State)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Address)</td>
+
+                                        <td><a href="~/Content/Files/DriverLicenses/@Html.DisplayFor(modelItem => item.DriverLicenseUrl)" target="_blank">View Driver License</a></td>
+
+                                        <td><a href="~/Content/Files/OfferLetters/@Html.DisplayFor(modelItem => item.OfferLetterUrl)" target="_blank">View Offer Letter</a></td>
+
+                                        <td><a href="@Url.Action("Approve", "UserProposals", new { id = item.Id })" class="btn btn-success">Approve Application</a></td>
+                                        <td><a href="@Url.Action("Delete", "UserProposals", new { id = item.Id })" class="btn btn-danger">Delete Application</a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

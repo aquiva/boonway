@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Boonwayy.Models.ERFDonation>
+
+@{
+    ViewBag.Title = "ERF Donations";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var totalAmount = 0;
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">See Monthly Contributions</h4>
+                        <p class="category">By members only</p>
+                    </div>
+                    <div class="content">
+                        
+                        <div class="footer">
+                            <a href="@Url.Action("MemberContributions", "ERF")" class="btn btn-info">View Monthly Contributions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Donations for Emergency relief funds</h4>
+
+                    </div>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped">
+                            <thead>
+
+                            <th>@Html.DisplayNameFor(model => model.DonatorName)</th>
+                            <th>@Html.DisplayNameFor(model => model.Email)</th>
+                            <th>@Html.DisplayNameFor(model => model.AmountInCents)</th>
+                            <th>@Html.DisplayNameFor(model => model.DonationDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.City)</th>
+                            <th>@Html.DisplayNameFor(model => model.State)</th>
+
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.DonatorName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td>@Html.DisplayFor(modelItem => item.AmountInCents)</td>
+                                <td>@item.DonationDate.ToLongDateString()</td>
+                                <td>@Html.DisplayFor(modelItem => item.City)</td>
+                                <td>@Html.DisplayFor(modelItem => item.State)</td>
+
+
+
+                            </tr>
+                    totalAmount += item.AmountInCents;
+                }
+
+                                <tr>
+                                    <td colspan="2" align="right" style="font-size:24px;">
+                                        <strong>Total Donation Amount: </strong>
+                                    </td>
+                                    <td colspan="4" align="left" style="font-size:24px;">
+                                        <strong>$@totalAmount</strong>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

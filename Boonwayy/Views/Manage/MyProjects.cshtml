@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Boonwayy.Models.Project>
+
+@{
+    ViewBag.Title = "My Projects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("UserDashboardMenu")
+
+<div class="container">
+    <h2>My Projects</h2>
+    <p class="lead">Manage your projects</p>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProjectTitle)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProjectStartDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProjectEndDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProjectStatus)
+                    </th>
+
+                    <th>
+                        <i class="fa fa-window-maximize"></i> Details
+                    </th>
+
+                    <th>
+                        <i class="fa fa-pencil-square"></i> Edit
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectStartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectEndDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectStatus)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Project", "Home", new { id = Html.DisplayFor(modelItem => item.Id) })" class="btn btn-sm btn-info">View</a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("EditProject", "Manage", new { id = Html.DisplayFor(modelItem => item.Id) })" class="btn btn-sm btn-info">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

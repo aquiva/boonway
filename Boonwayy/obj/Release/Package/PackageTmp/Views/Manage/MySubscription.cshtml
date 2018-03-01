@@ -1,0 +1,96 @@
+﻿@model Boonwayy.Models.MySubscriptionViewModel
+@{
+    ViewBag.Title = "My Subscription";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var SubCreateDate = Model.Created;
+    var RenewDate = Model.Renewal;
+}
+
+@Html.Partial("UserDashboardMenu")
+
+<div class="container">
+
+
+    @if (Model.Amount == 0.00m)
+    {
+        <h3>Your are not subscribed to any plans, <a href="@Url.Action("Index", "Subscription")">Click here to see subscription plans.</a></h3>
+        
+    }
+    else
+    {
+
+
+
+        <h2>My Subscription</h2>
+        <h3 class="text-capitalize text-primary"><i class="fa fa-info-circle"></i> Your subscription renews automatically, we do not provide manual option.</h3>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Active Subscription Details</div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>Subscription Plan:</th>
+                                <td>@Html.DisplayFor(model => model.Name)</td>
+                            </tr>
+                            <tr>
+                                <th>Start Date:</th>
+                                <td>@SubCreateDate.ToLongDateString()</td>
+                            </tr>
+                            <tr>
+                                <th>Renewal Date:</th>
+                                <td>@RenewDate.ToLongDateString()</td>
+                            </tr>
+                            <tr>
+                                <th>Amount:</th>
+                                <td>@Html.DisplayFor(model => model.Amount) / Month</td>
+                            </tr>
+                            <tr>
+                                <th>Statement Description</th>
+                                <td>@Html.DisplayFor(model => model.Desc)</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="#" class="btn btn-block btn-warning" data-toggle="modal" data-target="#myModal"><i class="fa fa-times"></i> Cancel Subscription</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Trigger the modal with a button -->
+        @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Cancel Subscription</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Are you sure you want to cancel subscription?</h3>
+                    </div>
+                    <div class="modal-footer">
+                        @using (Html.BeginForm("CancelSubscription", "Manage", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger">Yes</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+
+</div>

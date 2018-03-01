@@ -1,0 +1,201 @@
+﻿@model Boonwayy.Models.UserProposal
+
+@{
+    ViewBag.Title = "Application approval form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("UserDashboardMenu")
+
+<div class="container">
+
+    @if (@ViewBag.UploadError != null)
+    {
+        <h2 class="alert alert-danger">@ViewBag.UploadError</h2>
+    }
+    else if (@ViewBag.Message != null)
+    {
+        <h2 class="alert alert-success">@ViewBag.Message</h2>
+    }
+    else
+    {
+        <h2>Application approval form</h2>
+
+        using (Html.BeginForm("CreateUserProposal", "Manage", FormMethod.Post, new { enctype = "multipart/form-data", id = "porposalForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4 class="alert alert-info"><i class="fa fa-info-circle"></i> Fill out the form and we will review it, Upon approval you will be able to subscribe to our plans.</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SocialSecurityNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SocialSecurityNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SocialSecurityNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="offerLetterFile" class="control-label col-md-2">Offer Letter</label>
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon">Docx, Doc, PDF</span>
+                            <input type="file" id="offerLetterFile" name="offerLetterFile" class="form-control" onchange="fileUploadValidation('offerLetterFile');" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="driverLicenseFile" class="control-label col-md-2">Driving License Image</label>
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon">JPG, PNG, BMP</span>
+                            <input type="file" id="driverLicenseFile" name="driverLicenseFile" onchange="fileUploadValidation('driverLicenseFile');" class="form-control" required />
+                        </div>
+
+                    </div>
+                </div>
+
+                <input type="hidden" id="nullaty" class="form-control" />
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.OfferLetterUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.OfferLetterUrl, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OfferLetterUrl, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.DriverLicenseUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DriverLicenseUrl, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DriverLicenseUrl, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.IsApproved, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.IsApproved)
+                                @Html.ValidationMessageFor(model => model.IsApproved, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>*@
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.ApplicationUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ApplicationUserId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ApplicationUserId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Send My Application" onclick="Upload();" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+
+    function Upload() {
+        var offerLetterFile = document.getElementById("offerLetterFile");
+        var size = parseFloat(offerLetterFile.files[0].size / 1024).toFixed(2);
+        if (typeof (offerLetterFile.files) != "undefined") {
+
+            if (size > 10000) {
+                alert("Upload Limit Exceeded, 10MB is maximum file size.");
+
+                var offerLetterInput = $("#offerLetterFile");
+                offerLetterInput.replaceWith(offerLetterInput.val('').clone(true));
+            }
+            else {
+                return true;
+            }
+
+        } else {
+            alert("This browser does not support HTML5.");
+        }
+    }
+
+    function validateOfferLetter() {
+        var offerLetterFile = document.getElementById("offerLetterFile");
+        var size = parseFloat(offerLetterFile.files[0].size / 1024).toFixed(2);
+        if (typeof (offerLetterFile.files) != "undefined") {
+
+            if (size > 10000) {
+                alert("Upload Limit Exceeded, 10MB is maximum file size.");
+
+                var offerLetterInput = $("#offerLetterFile");
+                offerLetterInput.replaceWith(offerLetterInput.val('').clone(true));
+            }
+            else {
+                return true;
+            }
+
+        } else {
+            alert("This browser does not support HTML5.");
+        }
+    }
+
+    function fileUploadValidation(elementId) {
+        var myElementById = document.getElementById(elementId);
+        var size = parseFloat(myElementById.files[0].size / 1024).toFixed(2);
+        if (typeof (myElementById.files) != "undefined") {
+
+            if (size > 10000) {
+                alert("Upload Limit Exceeded, 10MB is maximum file size.");
+
+                var elementInput = $("#" + elementId);
+                elementInput.replaceWith(elementInput.val('').clone(true));
+            }
+            else {
+                return true;
+            }
+
+        } else {
+            alert("This browser does not support HTML5.");
+        }
+    }
+
+</script>

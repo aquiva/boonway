@@ -1,0 +1,101 @@
+﻿@model Boonwayy.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Boonway";
+}
+
+@if (!Request.IsAuthenticated)
+{
+
+    <section id="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Boonway</h2>
+                    <hr />
+                    <video controls="controls" class="img-responsive">
+                        <source src="~/Content/videos/e0b435e3384d58673a48b09e99869e6e.mp4" type="video/mp4" />
+                    </video>
+
+                </div>
+                <div class="col-md-8">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h2>Create a new account.</h2>
+                        <hr />
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "registerMail" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FullName, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "registerPassword" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <p>
+                                    By clicking Create Account, you agree to our <a href="@Url.Action("Terms", "Home")">Terms</a> and confirm that you have read our <a href="@Url.Action("Privacy", "Home")">Policy</a>.
+                                </p>
+                                <input type="submit" class="btn btn-primary" value="Create Account" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                @*<div class="col-md-4">
+                        <div class="well">
+                            <p><span class="glyphicon glyphicon-info-sign"></span></p>
+                            <h3>You can register here for free, however you will only be able to post project in CelebWorld category.</h3>
+                            <hr />
+                            <p>Checkout Subscription Plans After Registering (<a href="/subscription" target="_blank">see all plans</a>).</p>
+                        </div>
+                    </div>*@
+            </div>
+
+        </div>
+    </section>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+}
+else
+{
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h4><i class="fa fa-search"></i> Search Projects</h4>
+            @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+    {
+        <input type="text" class="form-control" placeholder="Project Title" name="txtSearchTitle" required />
+}
+            
+        </div>
+
+    </div>
+
+    @Html.Action("UserProjects");
+}

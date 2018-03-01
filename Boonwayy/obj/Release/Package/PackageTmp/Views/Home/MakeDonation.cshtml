@@ -1,0 +1,49 @@
+﻿@model Boonwayy.Models.Donation
+
+@{
+    ViewBag.Title = "Confirm Donation";
+}
+
+<div class="container">
+    <h2>Confirm Donation</h2>
+    <p class="lead">@Html.DisplayFor(model => model.AmountInCents) donation for @Session["projectTitle"]</p>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>State</th>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.DonatorName)</td>
+                    <td>@Html.DisplayFor(model => model.Email)</td>
+                    <td>@Html.DisplayFor(model => model.City)</td>
+                    <td>@Html.DisplayFor(model => model.State)</td>
+                </tr>
+            </table>
+            @using (Html.BeginForm("MakeCharge", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.DonatorName)
+                @Html.HiddenFor(model => model.Email)
+                @Html.HiddenFor(model => model.City)
+                @Html.HiddenFor(model => model.State)
+                @Html.HiddenFor(model => model.AmountInCents)
+
+
+                <script src="https://checkout.stripe.com/checkout.js"
+                        class="stripe-button"
+                        data-key="@ViewBag.PublishKey"
+                        data-amount="@ViewBag.AmountDollars"
+                        data-name="@Session["projectTitle"]"
+                        data-description="">
+                </script>
+
+                
+            }
+        </div>
+    </div>

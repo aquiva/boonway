@@ -1,0 +1,152 @@
+﻿@model Boonwayy.Models.MERF
+
+@{
+    ViewBag.Title = "Edit ERF";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("UserDashboardMenu")
+
+<div class="container">
+    <h2>Edit Story Post</h2>
+    <a href="#" class="btn pull-right btn-warning" data-toggle="modal" data-target="#myModal">Delete Story</a>
+    @using (Html.BeginForm("EditERF", "Manage", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>@ViewBag.ERFTitle</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.ApplicationUserId)
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Story, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Story, new { @class = "form-control", @rows = "10" })
+                    @Html.ValidationMessageFor(model => model.Story, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VideoUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VideoUrl, new { htmlAttributes = new { @class = "form-control", @id = "videoBox", @onchange = "makeEmbed()" } })
+                    @Html.ValidationMessageFor(model => model.VideoUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MERFStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MERFStartDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    @Html.ValidationMessageFor(model => model.MERFStartDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.MERFStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="text" class="form-control datepicker" />
+                    </div>
+
+                </div>*@
+
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.ApplicationUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ApplicationUserId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ApplicationUserId, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save Changes" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Trigger the modal with a button -->
+    @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete Post</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Are you sure you want to delete the post?</h3>
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm("DeleteERF", "Manage", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.ApplicationUserId)
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    function fileUploadValidation(elementId) {
+        var myElementById = document.getElementById(elementId);
+        var size = parseFloat(myElementById.files[0].size / 1024).toFixed(2);
+        if (typeof (myElementById.files) != "undefined") {
+
+            if (size > 10000) {
+                alert("Upload Limit Exceeded, 10MB is maximum file size.");
+
+                var elementInput = $("#" + elementId);
+                elementInput.replaceWith(elementInput.val('').clone(true));
+            }
+            else {
+                return true;
+            }
+
+        } else {
+            alert("This browser does not support HTML5.");
+        }
+    }
+
+    function makeEmbed() {
+        var str = document.getElementById("videoBox").value;
+
+        var res = str.replace(".com/watch?v=", ".com/embed/");
+
+
+        document.getElementById("videoBox").value = res;
+
+        //alert(res);
+    }
+
+</script>

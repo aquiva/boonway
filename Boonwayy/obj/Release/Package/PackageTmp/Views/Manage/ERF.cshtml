@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Boonwayy.Models.MERF>
+
+@{
+    ViewBag.Title = "ERF";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    
+
+}
+
+@Html.Partial("UserDashboardMenu")
+
+<div class="container">
+    <a href="@Url.Action("CreateERF", "Manage")" class="btn btn-primary pull-right">Create New Story Post</a>
+    <h2>Story Posts</h2>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive table-striped">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+
+                    <th>
+                        Starts On
+                    </th>
+
+                    <th>
+                        <i class="fa fa-window-maximize"></i> View
+                    </th>
+
+                    <th>
+                        <i class="fa fa-pencil-square"></i> Edit
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @item.MERFStartDate.ToLongDateString()
+                        </td>
+
+                        <td>
+                            <a href="@Url.Action("ERF", "Home", new { id = item.Title })" class="btn btn-sm btn-info" target="_blank">View</a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("EditERF", "Manage", new { id = Html.DisplayFor(modelItem => item.Id) })" class="btn btn-sm btn-info">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

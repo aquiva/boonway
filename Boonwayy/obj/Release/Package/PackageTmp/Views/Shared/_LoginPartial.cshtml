@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("CelebWorld", "Index", "Home")</li>
+            @*<li>@Html.ActionLink("CelebWorld", "Explore", "Home")</li>*@
+
+            <li>@Html.ActionLink("Emergency Relief Funds", "ERFs", "Home")</li>
+            <li>@Html.ActionLink("Subscription Plans", "Index", "Subscription")</li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="active">
+                @*@Html.ActionLink("My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+
+            <li class="active dropdown">
+                <a href="@Url.Action("Index", "Manage")" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="" href="@Url.Action("UserProfile", "Manage")">My Profile</a></li>
+                    <li><a href="@Url.Action("Index", "Manage")">Overview</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="@Url.Action("MyProjects", "Manage")">My Projects</a></li>
+                    <li><a href="@Url.Action("PostProject", "Manage")">Post a Project</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="@Url.Action("ChangePassword", "Manage")">Change Password</a></li>
+                    <li><a href="@Url.Action("MySubscription", "Manage")">Subscription</a></li>
+                    <li><a href="@Url.Action("CreateUserProposal", "Manage")">Submit a Proposal</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="@Url.Action("ERF", "Manage")">ERF</a></li>
+                </ul>
+            </li>
+
+
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li>@ViewBag.Role</li>
+        </ul>
+    }
+
+
+}
+else
+{
+
+    @Html.Partial("_LoginForm")
+
+}
+

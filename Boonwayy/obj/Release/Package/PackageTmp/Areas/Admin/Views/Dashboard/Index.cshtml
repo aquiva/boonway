@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Users</h4>
+                        <p class="category">Registered members</p>
+                    </div>
+                    <div class="content">
+                        <h3>Total @ViewBag.TotalUsers</h3>
+                        <hr />
+                        <div class="footer">
+                            <a href="#" class="btn btn-info">View All Users</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Projects</h4>
+                        <p class="category">Total projects posted by members</p>
+                    </div>
+                    <div class="content">
+                        <h3>Total @ViewBag.TotalProjects</h3>
+                        <hr />
+                        <div class="footer">
+                            <a href="#" class="btn btn-info">View All Projects</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Approval Applications</h4>
+                        <p class="category">Total applications sent by members</p>
+                    </div>
+                    <div class="content">
+                        <h3>Total @ViewBag.TotalProposals</h3>
+                        <p class="label label-danger">New Proposals: @ViewBag.NewProposals</p>
+                        <hr />
+                        <div class="footer">
+                            <a href="#" class="btn btn-info">View All Applications </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
